@@ -1,0 +1,1 @@
+#include <iostream>#include "../functor/collection.h"using namespace fnc;int main(){    fvec<int> even_numbers_squared = vrange(0,50,1)        .filter([](int x) { return x%2 == 0; })        .map([](int x) { return x*x; });    for (auto const &i: even_numbers_squared) {        std::cout << i << " ";    }    std::cout << std::endl;}
