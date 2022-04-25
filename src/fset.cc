@@ -179,7 +179,8 @@ namespace fnc {
     }
 
     template <typename T>
-    inline bool fset<T>::map_contains(std::map<T,bool> m, T val)
+    template <typename U>
+    inline bool fset<T>::map_contains(std::map<T,U> m, T val)
     {
         return m.find(val) != m.end();
     }

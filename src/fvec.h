@@ -13,8 +13,6 @@
 #include <map>
 #include <tuple>
 
-
-
 namespace fnc {
 
     template <typename T>
@@ -110,21 +108,24 @@ namespace fnc {
 
         fvec<T> scanl(std::function<T(T,T)> f, T base);
 
-        /*
-         * `group_by` returns an fvec of fvec, grouped by the predicate `f`
-         *
-         * Example:
-         *
-         *    
-         */
-        fvec<fvec<T> > group_by(std::function<bool(T,T)> f);
 
         /*
-         * `group` is just a shortcut for:
-         *  
-         *    group_by([](int x, int y) {return x == y; })
+         * `group` returns an fvec of fvec, grouped by the predicate `f`
          */
         fvec<fvec<T> > group();
+
+        /*
+         *
+         *
+         */
+        fvec<fvec<T> > clusterize_by(std::function<bool(T,T)> f);
+
+        /*
+         *  `clusterize` is just a shortcut for:
+         *
+         *      clusterize_by([](int x, int y) {return x == y; });
+         */
+        fvec<fvec<T> > clusterize();
 
         /*
          * `map` applies to each element of the fvec the function
@@ -224,14 +225,15 @@ namespace fnc {
         fvec<T> shuffle();
     
     private :
-        inline bool map_contains(std::map<T,bool> m, T val);
+        template <typename U>
+        inline bool map_contains(std::map<T,U> m, T val);
     };
 
     fvec<int> vrange(int start, int stop, int step);
     inline fvec<int> vrange(int stop, int step);
     template <typename T> fvec<T> cycle(fvec<T> vec, int n);
-    
 }
+
 #include "fvec.cc"
 
 #endif

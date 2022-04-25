@@ -154,9 +154,31 @@ namespace fnc {
     }
 
     template <typename T>
-    fvec<fvec<T> > fvec<T>::group_by(std::function<bool(T,T)> f)
+    fvec<fvec<T> > fvec<T>::group()
     {
-        fvec<fvec<T>> grouped;
+        fvec<fvec<T> > grouped;
+        std::map<T,int> m;
+        for (auto const &e : *this) {
+            if (map_contains(m,e)) 
+                m[e]++;
+            else
+                m[e] = 1;
+        }
+
+        for (auto const& x : m) {
+            fvec<T> group;
+            for (int i = 0; i < x.second; i++) {
+                group.push_back(x.first);
+            }
+            grouped.push_back(group);
+        }
+        return grouped;
+    }
+
+    template <typename T>
+    fvec<fvec<T> > fvec<T>::clusterize_by(std::function<bool(T,T)> f)
+    {
+        fvec<fvec<T> > clusterized;
         auto i = this->begin();
     
         while(i != this->end()) {
@@ -167,16 +189,16 @@ namespace fnc {
                 ++i;
             }
             ++i;
-            grouped.push_back(tmp);
+            clusterized.push_back(tmp);
         }
     
-        return grouped;
+        return clusterized;
     }
-
+    
     template <typename T>
-    fvec<fvec<T> > fvec<T>::group()
+    fvec<fvec<T> > fvec<T>::clusterize()
     {
-        return this->group_by([](T x, T y) { return x == y; });
+        return this->clusterize_by([](T x, T y) { return x == y; });
     }
 
     template <typename T>
@@ -199,8 +221,6 @@ namespace fnc {
         }
         return vector;
     }
-
-template fvec<int> fvec<int>::filter(std::function<bool(int)> predicate);
 
     template <typename T>
     fvec<fvec<T> > fvec<T>::zip(fvec<T> other)
@@ -369,7 +389,7 @@ template fvec<int> fvec<int>::filter(std::function<bool(int)> predicate);
    template <typename T>
    std::tuple<T,T> fvec<T>::minmax()
    {
-       return std::make_tuple(this->min(),this->max);
+       return std::make_tuple(this->min(),this->max());
    }
 
     template <typename T>
@@ -473,7 +493,8 @@ template fvec<int> fvec<int>::filter(std::function<bool(int)> predicate);
     }
 
     template <typename T>
-    inline bool fvec<T>::map_contains(std::map<T,bool> m, T val)
+    template <typename U>
+    inline bool fvec<T>::map_contains(std::map<T,U> m, T val)
     {
         return m.find(val) != m.end();
     }

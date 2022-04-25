@@ -91,9 +91,9 @@ namespace fnc {
 
         fset<T> intersperse(T elem);
         
-    
     private :
-        inline bool map_contains(std::map<T,bool> m, T val);
+        template <typename U>
+        inline bool map_contains(std::map<T,U> m, T val);
     };
 
 }

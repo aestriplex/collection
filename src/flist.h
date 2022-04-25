@@ -111,20 +111,22 @@ namespace fnc {
         flist<T> scanl(std::function<T(T,T)> f, T base);
 
         /*
-         * `group_by` returns an flist of flist, grouped by the predicate `f`
-         *
-         * Example:
-         *
-         *    
+         * `group` returns an flist of flist, grouped by the predicate `f`
          */
-        flist<flist<T>> group_by(std::function<bool(T,T)> f);
+        flist<flist<T> > group();
 
         /*
-         * `group` is just a shortcut for:
-         *  
-         *    group_by([](int x, int y) {return x == y; })
+         *
+         *
          */
-        flist<flist<T>> group();
+        flist<flist<T> > clusterize_by(std::function<bool(T,T)> f);
+
+        /*
+         *  `clusterize` is just a shortcut for:
+         *
+         *      clusterize_by([](int x, int y) {return x == y; });
+         */
+        flist<flist<T> > clusterize();
 
         /*
          * `map` applies to each element of the flist the function
@@ -224,7 +226,8 @@ namespace fnc {
         flist<T> shuffle();
         
     private :
-        inline bool map_contains(std::map<T,bool> m, T val);
+        template <typename U>
+        inline bool map_contains(std::map<T,U> m, T val);
         
     };
 
