@@ -21,19 +21,10 @@ namespace fnc {
     class fvec : public std::vector<T> {
     
     public :
-        /*
-         *
-         */
         fvec();
         
-        /*
-         *
-         */
         fvec(std::vector<T> v);
 
-        /*
-         *
-         */
         inline std::vector<T> to_vector();
 
         /*
@@ -115,18 +106,12 @@ namespace fnc {
          */
         T foldl(std::function<T(T,T)> f, T base);
 
-        /*
-         *
-         */
         fvec<T> scanr(std::function<T(T,T)> f, T base);
 
-        /*
-         *
-         */
         fvec<T> scanl(std::function<T(T,T)> f, T base);
 
         /*
-         * `group_by` returns a an fvec of fvec, grouped by the predicate `f`
+         * `group_by` returns an fvec of fvec, grouped by the predicate `f`
          *
          * Example:
          *
@@ -137,9 +122,8 @@ namespace fnc {
         /*
          * `group` is just a shortcut for:
          *  
-         *    group([](int x, int y) {return x == y; })
+         *    group_by([](int x, int y) {return x == y; })
          */
-        
         fvec<fvec<T> > group();
 
         /*
@@ -171,49 +155,22 @@ namespace fnc {
          */
         fvec<T> zip_with(fvec<T> other, std::function<bool(T,T)> f);
 
-        /*
-         * `concat` appends the 
-         */
         fvec<T> concat(fvec<T> other);
 
-        /*
-         * 
-         */
         fvec<fvec<T> > inits();
 
-        /*
-         * 
-         */
         fvec<fvec<T> > tails();
 
-        /*
-         * 
-         */
         fvec<T> unite(fvec<T> other);
 
-        /*
-         * 
-         */
         fvec<T> intersecate(fvec<T> other);
 
-        /*
-         * 
-         */
         fvec<T> distinct();
 
-        /*
-         * 
-         */
         inline bool any(T elem);
 
-        /*
-         * 
-         */
         inline fvec<T> singleton(T element);
 
-        /*
-         * 
-         */
         fvec<T> reverse();
 
         /*
@@ -244,56 +201,26 @@ namespace fnc {
          * `minmax` returns the tuple <min,max>.
          * WARNING: T must implement both (<=) and (>=)
          */
-        //std::tuple<T,T> minmax();
+        std::tuple<T,T> minmax();
 
-        /*
-         * 
-         */
         void foreach(std::function<void(T)> action);
 
-        /*
-         * 
-         */
         template <typename U> fvec<U> select(std::function<U(T)> selector);
 
-        /*
-         * 
-         */
         fvec<T> except(fvec<T> other);
 
-        /*
-         * 
-         */
         fvec<T> sort(std::function<bool(T,T)> comparator);
 
-        /*
-         * 
-         */
         fvec<T> sort();
 
-        /*
-         * 
-         */
         fvec<T> sort_heap(std::function<bool(T,T)> comparator);
 
-        /*
-         * 
-         */
         fvec<T> sort_heap();
 
-        /*
-         * 
-         */
         fvec<T> intersperse(T elem);
 
-        /*
-         * 
-         */
         fvec<T> rotate_left(int n_positions);
 
-        /*
-         * 
-         */
         fvec<T> shuffle();
     
     private :

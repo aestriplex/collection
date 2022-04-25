@@ -1,6 +1,6 @@
 /*
- *  functor/fvec.cc
- *  library: functor
+ *  collection/src/fvec.cc
+ *  library: collection
  *
  *  Created by Nicoli Matteo on 07/06/2021.
  *  Copyright © 2021 Nicoli Matteo.
@@ -13,8 +13,6 @@
 #include <chrono>
 #include <map>
 #include <tuple>
-
-#include "fvec.h"
 
 namespace fnc {
 
@@ -190,8 +188,6 @@ namespace fnc {
         }
         return vector;
     }
-
-//template fvec<int> fvec<int>::map(std::function<int(int)> predicate);
 
     template <typename T>
     fvec<T> fvec<T>::filter(std::function<bool(T)> predicate)
@@ -370,11 +366,11 @@ template fvec<int> fvec<int>::filter(std::function<bool(int)> predicate);
         return std::max(this->head(),this->tail().max());
     }
 
-//    template <typename T>
-//    std::tuple<T,T> fvec<T>::minmax()
-//    {
-//        return std::make_tuple(this->min(),this->max);
-//    }
+   template <typename T>
+   std::tuple<T,T> fvec<T>::minmax()
+   {
+       return std::make_tuple(this->min(),this->max);
+   }
 
     template <typename T>
     void fvec<T>::foreach(std::function<void(T)> action)
@@ -401,7 +397,7 @@ template fvec<int> fvec<int>::filter(std::function<bool(int)> predicate);
         std::map<T,bool> m;
         fvec<T> res;
         for (auto const &i: other) {
-            if (! map_contains(m,i)) m[i] = true;
+            if (!map_contains(m,i)) m[i] = true;
         }
         for (auto const &j: *this) {
             if (!map_contains(m,j)) res.push_back(j);
@@ -482,76 +478,3 @@ template fvec<int> fvec<int>::filter(std::function<bool(int)> predicate);
         return m.find(val) != m.end();
     }
 }
-
-//using namespace fnc;
-//
-//int main()
-//{
-//    fvec<int> even_numbers_squared = vrange(0,50,1)
-//        .filter([](int x) { return x%2 == 0; })
-//        .map([](int x) { return x*x; });
-//
-//    for (auto const &i: even_numbers_squared) {
-//        std::cout << i << " ";
-//    }
-//    std::cout << std::endl;
-//}
-
-
-/*
-  int main(int argc, const char * argv[])
-  {
-    
-  // Let vec be a vector that stores the results of a computation.
-  // The code below filters such results keeping only these greater
-  // that a certain value `x`, and finally it prints them.
-     
-  double max_val = 4.0;
-  fvec<double> v({1.5, 3.14, 5.00, 6, -4.3});
-  v.filter([max_val](double x) { return x <= max_val; })
-  .foreach([](double x){ std::cout << x << " "; });
-   
-    
-    
-//    for (auto const &i: v) {
-//        for (auto const &j: i) {
-//            std::cout << j << "\t";
-//        }
-//        std::cout << std::endl;
-//    }
-    
-    
-fvec<int> vec({-4,5,8,8,0,-3,7});
-fvec<fvec<int>> vv = vec.group();
-for (auto const &i: vv) {
-for (auto const &j: i) {
-std::cout << j << "\t";
-}
-std::cout << std::endl;
-}
-    
-fvec<int> r = vrange(10);
-fvec<int> ot({3,4,4,3,3});
-auto scan = r.except(ot);
-
-for (auto const &j: scan) {
-std::cout << j << "\t";
-}
-std::cout << std::endl << "---------------------------\n\n";
-
-auto cc = cycle(scan, 3);
-for (auto const &j: cc) {
-std::cout << j << "\t";
-}
-std::cout << std::endl;
-    
-std::cout << std::endl << "SUM-------------------------\n\n";
-int _s = ot.sum();
- 
-std::cout << _s << "\t";
-    
-std::cout << std::endl;
-    
-return 0;
-}
-*/

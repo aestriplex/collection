@@ -1,6 +1,6 @@
 /*
- *  functor/flist.cc
- *  library: functor
+ *  collection/src/flist.cc
+ *  library: collection
  *
  *  Created by Nicoli Matteo on 07/06/2021.
  *  Copyright © 2021 Nicoli Matteo.
@@ -13,9 +13,7 @@
 #include <random>
 #include <chrono>
 
-#include "flist.h"
-
-namespace fnc{
+namespace fnc {
 
 flist<int> lrange(int start, int stop, int step = 1)
 {
